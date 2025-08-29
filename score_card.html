@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121111;
+            color: #2189f1;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .score {
+            font-size: 32px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 20px;
+            background-color: #fc6c44;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Score Card</h1>
+    <h2 style="color: green; font-size: 30px;">Your Score: {{ score }}/{{ total }}</h2>
+    <button class="btn" onclick="window.close()">Close</button>
+</body>
+</html>

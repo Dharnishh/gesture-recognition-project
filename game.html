@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Recognition Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121111;
+            color: #2189f1;
+        }
+        .command {
+            font-size: 48px;
+            margin: 20px;
+        }
+        #videoFeed {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio */
+            border: 1px solid #2189f1;
+        }
+        #scoreCard {
+            display: none;
+            font-size: 32px;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        let currentCommand = '';
+        let commandDuration = 5000; // Duration to show each command in milliseconds
+        let attemptsLeft = 7; // Total attempts
+        let score = 0; // Player's score
+
+        function getNewCommand() {
+            fetch('/get_command')
+                .then(response => response.json())
+                .then(data => {
+                    currentCommand = data.command;
+                    attemptsLeft = data.attempts_left;
+
+                    if (attemptsLeft > 0) {
+                        document.getElementById('command').innerText = currentCommand;
+                        speakCommand(currentCommand); // Speak the command
+                        setTimeout(getNewCommand, commandDuration ); // Get a new command after the duration
+                    } else {
+                        displayScoreCard(data.score); // Display score card when game is over
+                    }
+                });
+        }
+
+        function speakCommand(command) {
+            const utterance = new SpeechSynthesisUtterance(command);
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function displayScoreCard(finalScore) {
+            document.getElementById('scoreCard').innerText = `Game Over! Your Score: ${finalScore}`;
+            document.getElementById('scoreCard').style.display = 'block';
+            document.getElementById('command').style.display = 'none'; // Hide command display
+        }
+
+        function submitScore() {
+            fetch('/submit_score', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    score = data.score; // Update score
+                    document.getElementById('scoreCard').innerText = `Score: ${score}`; // Display current score
+                });
+        }
+
+        window.onload = function() {
+            getNewCommand();
+            document.getElementById('videoFeed').src = "/video_feed"; // Set the video feed source
+        };
+        function displayScoreCard(finalScore) {
+            document.getElementById('scoreCard').innerText = `Game Over! Your Score: ${finalScore}`;
+            document.getElementById('scoreCard').style.display = 'block';
+            document.getElementById('command').style.display = 'none';  // Hide command display
+
+        // Stop the video feed by removing the source
+            document.getElementById('videoFeed').src = "";
+        }
+
+        window.onload = function() {
+            getNewCommand();
+            document.getElementById('videoFeed').src = "/video_feed";  // Set the video feed source
+        };
+    </script>
+</head>
+<body>
+    <h1>Gesture Recognition Game</h1>
+    <div class="command" id="command">Get Ready!</div>
+    <img id="videoFeed" autoplay playsinline src="/video_feed"alt="Video Feed"></video>
+    <div id="scoreCard"></div>
+</body>
+</html>
