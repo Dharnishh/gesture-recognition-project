@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 flask
 opencv-python
 tensorflow
