@@ -4,17 +4,3 @@ opencv-python
 tensorflow
 numpy
 mediapipe
-=======
-pip install opencv-python Version: 4.10.0.84
-pip install mediapipe Version: 0.10.14
-pip install flask Version: 3.0.3
-pip install numpy
-pip install tensorflow Version: 2.16.1
-pip install keras Version: 3.5.0
-
-
-optional    
-pip install pyautogui
-pip install imutils
- 
->>>>>>> ba1f0d01e794f929331083a464713dd5805c93a7
