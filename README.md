@@ -1,1 +1,1 @@
-"# Gesture-Recognition-Project Capturing the students activity gesture" 
+"Gesture-Recognition-Project Capturing the students activity gesture" 
